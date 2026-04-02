@@ -1,4 +1,4 @@
-# QR Code Generator + Trackable QR
+# [QR Code Generator + Trackable QR](https://robert-z-lehr.github.io/QR-Code-Generators-Basic-and-Trackable/)
 
 This starter keeps a simple QR generator and adds a trackable QR generator.
 KYC: Know-Your-Customer
