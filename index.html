@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>QR Code Generator</title>
+  <link rel="stylesheet" href="styles.css" />
+  <script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
+</head>
+<body>
+  <main class="page">
+    <h1>QR Code Generator</h1>
+    <p class="subtitle">Basic QR on the left. Trackable QR on the right.</p>
+    <section class="grid">
+      <div class="panel">
+        <h2>Basic QR Code</h2>
+        <label for="basic-url">URL or text</label>
+        <input id="basic-url" type="text" placeholder="https://example.com" />
+        <button id="generate-basic">Generate Basic QR</button>
+        <div id="basic-qr" class="qr-box"></div>
+        <button id="download-basic" class="secondary">Download Basic QR</button>
+      </div>
+
+      <div class="panel">
+        <h2>Trackable QR Code</h2>
+        <label for="track-label">Label</label>
+        <input id="track-label" type="text" placeholder="Campaign or label" />
+
+        <label for="track-url">Destination URL</label>
+        <input id="track-url" type="text" placeholder="https://example.com/landing-page" />
+
+        <label for="track-mode">Tracking mode</label>
+        <select id="track-mode">
+          <option value="direct">Direct redirect only</option>
+          <option value="precise">Ask for precise location first</option>
+        </select>
+
+        <button id="generate-trackable">Generate Trackable QR</button>
+        <div id="trackable-qr" class="qr-box"></div>
+        <div id="track-meta" class="meta"></div>
+        <button id="download-trackable" class="secondary">Download Trackable QR</button>
+      </div>
+    </section>
+  </main>
+  <script src="script.js"></script>
+</body>
+</html>
