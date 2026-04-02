@@ -1,6 +1,7 @@
 # QR Code Generator + Trackable QR
 
 This starter keeps a simple QR generator and adds a trackable QR generator.
+KYC: Know-Your-Customer
 
 ## File tree
 
