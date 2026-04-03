@@ -14,10 +14,35 @@
     async function run() {
       const params = new URLSearchParams(window.location.search);
       const id = (params.get("id") || "").trim();
+      const wantsPrecise = params.get("track") === "1";
 
       if (!id) {
         document.getElementById("status").textContent = "Missing tracking id.";
         return;
+      }
+
+      const payload = {
+        action: "resolveAndLog",
+        trackingId: id,
+        userAgent: navigator.userAgent || ""
+      };
+
+      if (wantsPrecise && navigator.geolocation) {
+        try {
+          const position = await new Promise((resolve, reject) => {
+            navigator.geolocation.getCurrentPosition(resolve, reject, {
+              enableHighAccuracy: true,
+              timeout: 5000,
+              maximumAge: 0
+            });
+          });
+
+          payload.preciseLatitude = position.coords.latitude;
+          payload.preciseLongitude = position.coords.longitude;
+          payload.preciseAccuracyMeters = position.coords.accuracy;
+        } catch (error) {
+          // Ignore location failure and continue without precise location
+        }
       }
 
       try {
@@ -26,11 +51,7 @@
           headers: {
             "Content-Type": "text/plain;charset=utf-8"
           },
-          body: JSON.stringify({
-            action: "resolveAndLog",
-            trackingId: id,
-            userAgent: navigator.userAgent || ""
-          })
+          body: JSON.stringify(payload)
         });
 
         const result = await response.json();
