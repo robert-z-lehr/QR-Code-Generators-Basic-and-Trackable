@@ -2,7 +2,7 @@ const APPS_SCRIPT_WEB_APP_URL = "https://script.google.com/macros/s/AKfycbxRKHN-
 
 function clearQr(containerId) {
   const el = document.getElementById(containerId);
-  el.innerHTML = "";
+  if (el) el.innerHTML = "";
 }
 
 function generateBasicQR() {
@@ -96,13 +96,15 @@ function downloadQrFromBox(boxId, filename) {
   link.click();
 }
 
-document.getElementById("generateBasicBtn").addEventListener("click", generateBasicQR);
-document.getElementById("generateTrackableBtn").addEventListener("click", generateTrackableQR);
+window.addEventListener("DOMContentLoaded", () => {
+  document.getElementById("generateBasicBtn").addEventListener("click", generateBasicQR);
+  document.getElementById("generateTrackableBtn").addEventListener("click", generateTrackableQR);
 
-document.getElementById("downloadBasicBtn").addEventListener("click", () => {
-  downloadQrFromBox("basicQrBox", "basic-qr.png");
-});
+  document.getElementById("downloadBasicBtn").addEventListener("click", () => {
+    downloadQrFromBox("basicQrBox", "basic-qr.png");
+  });
 
-document.getElementById("downloadTrackableBtn").addEventListener("click", () => {
-  downloadQrFromBox("trackableQrBox", "trackable-qr.png");
+  document.getElementById("downloadTrackableBtn").addEventListener("click", () => {
+    downloadQrFromBox("trackableQrBox", "trackable-qr.png");
+  });
 });
