@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Redirecting...</title>
+</head>
+<body>
+  <p id="status">Redirecting...</p>
+
+  <script>
+    const APPS_SCRIPT_WEB_APP_URL = "PASTE_YOUR_APPS_SCRIPT_WEB_APP_URL_HERE";
+
+    async function run() {
+      const params = new URLSearchParams(window.location.search);
+      const id = (params.get("id") || "").trim();
+
+      if (!id) {
+        document.getElementById("status").textContent = "Missing tracking id.";
+        return;
+      }
+
+      try {
+        const response = await fetch(APPS_SCRIPT_WEB_APP_URL, {
+          method: "POST",
+          headers: {
+            "Content-Type": "text/plain;charset=utf-8"
+          },
+          body: JSON.stringify({
+            action: "resolveAndLog",
+            trackingId: id,
+            userAgent: navigator.userAgent || ""
+          })
+        });
+
+        const result = await response.json();
+
+        if (!result.ok || !result.destinationUrl) {
+          document.getElementById("status").textContent =
+            result.error || "Tracking failed.";
+          return;
+        }
+
+        window.location.replace(result.destinationUrl);
+      } catch (error) {
+        document.getElementById("status").textContent =
+          "Redirect failed: " + String(error);
+      }
+    }
+
+    run();
+  </script>
+</body>
+</html>
