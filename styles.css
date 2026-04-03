@@ -2,12 +2,25 @@ body { margin:0; font-family: Arial, Helvetica, sans-serif; background:#f5f6f8; 
 .page { max-width:1100px; margin:40px auto; padding:0 16px; }
 h1 { text-align:center; margin-bottom:8px; }
 .subtitle { text-align:center; margin-bottom:32px; color:#555; }
-.grid { display:grid; grid-template-columns:repeat(auto-fit, minmax(340px, 1fr)); gap:20px; }
-.panel { background:white; border-radius:14px; box-shadow:0 8px 24px rgba(0,0,0,0.08); padding:20px; }
+.grid { display:grid; grid-template-columns:repeat(auto-fit, minmax(340px, 1fr)); gap:20px; align-items:stretch; }
+.panel { background:white; border-radius:14px; box-shadow:0 8px 24px rgba(0,0,0,0.08); padding:20px; display:flex; flex-direction:column; }
 label { display:block; font-weight:600; margin-top:12px; margin-bottom:6px; }
 input, select, button { width:100%; box-sizing:border-box; font-size:16px; border-radius:10px; }
 input, select { padding:12px; border:1px solid #cfd4dc; margin-bottom:8px; }
 button { border:none; padding:12px 14px; margin-top:10px; cursor:pointer; background:#1f6feb; color:white; font-weight:700; }
-button.secondary { background:#4b5563; }
+button.secondary { background:#4b5563; margin-top:auto; }
 .qr-box { min-height:288px; display:flex; align-items:center; justify-content:center; margin-top:18px; border:1px dashed #d3d7de; border-radius:12px; padding:14px; background:#fafbfc; }
-.meta { margin-top:12px; font-size:14px; color:#444; line-height:1.5; word-break:break-word; }
+.meta { margin-top:12px; font-size:14px; color:#444; line-height:1.5; word-break:break-word; min-height:72px; }
+
+
+
+
+
+
+
+
+
+
+
+
+
