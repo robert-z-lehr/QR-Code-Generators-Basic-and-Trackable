@@ -1,4 +1,4 @@
-const APPS_SCRIPT_WEB_APP_URL = "PASTE_YOUR_APPS_SCRIPT_WEB_APP_URL_HERE";
+const APPS_SCRIPT_WEB_APP_URL = "https://script.google.com/macros/s/AKfycbxRKHN-tkaLGizpx8mPCJh-Ak5yWzParxqerFIDLhAQ1fVSoQXBrMk-2k0Jcbe2Mp-8Sg/exec";
 
 function clearAndRenderQRCode(containerId, text) {
   const container = document.getElementById(containerId);
