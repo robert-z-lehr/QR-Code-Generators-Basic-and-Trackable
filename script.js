@@ -47,6 +47,7 @@ async function generateTrackableQR() {
       action: "createTrackable",
       label,
       destinationUrl,
+      notificationEmail,
       redirectMode
     });
 
@@ -76,6 +77,7 @@ async function generateTrackableQR() {
     metaBox.innerHTML = `
       <div><strong>Tracking ID:</strong> ${result.trackingId}</div>
       <div><strong>Tracking URL:</strong> ${trackingUrl}</div>
+      <div><strong>Notification Email:</strong> ${result.notificationEmail || "(default)"}</div>
       <div><strong>Mode:</strong> ${result.redirectMode}</div>
     `;
   } catch (error) {
