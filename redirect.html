@@ -21,11 +21,11 @@
         return;
       }
 
-      const payload = {
+      const body = new URLSearchParams({
         action: "resolveAndLog",
         trackingId: id,
         userAgent: navigator.userAgent || ""
-      };
+      });
 
       if (wantsPrecise && navigator.geolocation) {
         try {
@@ -37,28 +37,24 @@
             });
           });
 
-          payload.preciseLatitude = position.coords.latitude;
-          payload.preciseLongitude = position.coords.longitude;
-          payload.preciseAccuracyMeters = position.coords.accuracy;
+          body.set("preciseLatitude", String(position.coords.latitude));
+          body.set("preciseLongitude", String(position.coords.longitude));
+          body.set("preciseAccuracyMeters", String(position.coords.accuracy));
         } catch (error) {
-          // Ignore location failure and continue without precise location
+          // continue without precise location
         }
       }
 
       try {
         const response = await fetch(APPS_SCRIPT_WEB_APP_URL, {
           method: "POST",
-          headers: {
-            "Content-Type": "text/plain;charset=utf-8"
-          },
-          body: JSON.stringify(payload)
+          body
         });
 
         const result = await response.json();
 
         if (!result.ok || !result.destinationUrl) {
-          document.getElementById("status").textContent =
-            result.error || "Tracking failed.";
+          document.getElementById("status").textContent = JSON.stringify(result);
           return;
         }
 
