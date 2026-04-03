@@ -42,26 +42,22 @@ async function generateTrackableQR() {
   }
 
   try {
-    const payload = {
+    const body = new URLSearchParams({
       action: "createTrackable",
       label,
       destinationUrl,
       redirectMode
-    };
+    });
 
     const response = await fetch(APPS_SCRIPT_WEB_APP_URL, {
       method: "POST",
-      headers: {
-        "Content-Type": "text/plain;charset=utf-8"
-      },
-      body: JSON.stringify(payload)
+      body
     });
 
     const result = await response.json();
 
     if (!result.ok) {
-      metaBox.textContent = (result.error || "Failed to create trackable QR.") +
-        (result.receivedAction ? ` | receivedAction: ${result.receivedAction}` : "");
+      metaBox.textContent = JSON.stringify(result);
       return;
     }
 
