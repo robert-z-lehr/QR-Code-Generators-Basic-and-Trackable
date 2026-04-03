@@ -29,6 +29,7 @@ function generateBasicQR() {
 async function generateTrackableQR() {
   const label = document.getElementById("trackableLabel").value.trim();
   const destinationUrl = document.getElementById("trackableUrl").value.trim();
+  const notificationEmail = document.getElementById("notificationEmail").value.trim();
   const redirectMode = document.getElementById("trackingMode").value;
   const qrBox = document.getElementById("trackableQrBox");
   const metaBox = document.getElementById("trackableMeta");
