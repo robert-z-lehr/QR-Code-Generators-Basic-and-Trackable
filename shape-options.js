@@ -18,24 +18,11 @@ function renderCircularQr(boxId, data) {
     shape: "circle",
     data,
     margin: 0,
-    qrOptions: {
-      errorCorrectionLevel: "L"
-    },
-    dotsOptions: {
-      color: "#000000",
-      type: "square"
-    },
-    cornersSquareOptions: {
-      color: "#000000",
-      type: "square"
-    },
-    cornersDotOptions: {
-      color: "#000000",
-      type: "square"
-    },
-    backgroundOptions: {
-      color: "transparent"
-    }
+    qrOptions: { errorCorrectionLevel: "L" },
+    dotsOptions: { color: "#000000", type: "square" },
+    cornersSquareOptions: { color: "#000000", type: "square" },
+    cornersDotOptions: { color: "#000000", type: "square" },
+    backgroundOptions: { color: "transparent" }
   });
 
   circleQrInstances[boxId] = circleQr;
@@ -61,12 +48,10 @@ async function downloadCircularQr(boxId, filename) {
 
     const ctx = canvas.getContext("2d");
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-
     ctx.fillStyle = "white";
     ctx.beginPath();
     ctx.arc(canvas.width / 2, canvas.height / 2, canvas.width / 2, 0, Math.PI * 2);
     ctx.fill();
-
     ctx.drawImage(img, padding, padding, size, size);
 
     const link = document.createElement("a");
@@ -96,36 +81,29 @@ window.addEventListener("DOMContentLoaded", () => {
 
   basicGenerateBtn.addEventListener("click", () => {
     const shape = document.getElementById("basicShape").value;
-
-    if (shape !== "circle") {
-      circleQrInstances.basicQrBox = null;
-      return;
-    }
+    circleQrInstances.basicQrBox = null;
+    if (shape !== "circle") return;
 
     const text = document.getElementById("basicText").value.trim();
     if (!text) return;
-
     renderCircularQr("basicQrBox", text);
   });
 
   trackableGenerateBtn.addEventListener("click", () => {
     const shape = document.getElementById("trackableShape").value;
+    circleQrInstances.trackableQrBox = null;
 
     if (trackableCircleObserver) {
       trackableCircleObserver.disconnect();
       trackableCircleObserver = null;
     }
 
-    if (shape !== "circle") {
-      circleQrInstances.trackableQrBox = null;
-      return;
-    }
+    if (shape !== "circle") return;
 
     const destinationUrl = document.getElementById("trackableUrl").value.trim();
     if (!destinationUrl) return;
 
     const metaBox = document.getElementById("trackableMeta");
-
     trackableCircleObserver = new MutationObserver(() => {
       const trackingUrl = findTrackingUrl(metaBox);
 
