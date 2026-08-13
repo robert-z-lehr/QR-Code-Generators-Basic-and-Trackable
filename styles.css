@@ -10,6 +10,8 @@ input, select { padding:12px; border:1px solid #cfd4dc; margin-bottom:8px; }
 button { border:none; padding:12px 14px; margin-top:10px; cursor:pointer; background:#1f6feb; color:white; font-weight:700; }
 button.secondary { background:#4b5563; margin-top:auto; }
 .qr-box { min-height:288px; display:flex; align-items:center; justify-content:center; margin-top:18px; border:1px dashed #d3d7de; border-radius:12px; padding:14px; background:#fafbfc; }
+.circle-frame { border-radius:50%; background:white; padding:14px; display:flex; align-items:center; justify-content:center; }
+.circle-frame canvas, .circle-frame svg { display:block; }
 .meta { margin-top:12px; font-size:14px; color:#444; line-height:1.5; word-break:break-word; min-height:72px; }
 
 
