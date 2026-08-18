@@ -3,74 +3,165 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>QR Code Generator</title>
+  <title>Penny for Your Thoughts? | QR Generator</title>
+  <meta name="description" content="Make a direct contact QR, a basic URL/text QR, or an optional trackable QR. Includes physical-size and scanability guidance." />
   <link rel="stylesheet" href="styles.css" />
   <script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
   <script src="https://unpkg.com/qr-code-styling@1.9.0/lib/qr-code-styling.js"></script>
 </head>
 <body>
   <main class="page">
-    <h1>QR Code Generator</h1>
-    <p class="subtitle">Basic QR on the left. Trackable QR on the right.</p>
+    <header class="hero">
+      <div class="eyebrow">Penny for Your Thoughts?</div>
+      <h1>A small object. A useful connection.</h1>
+      <p class="lede">If someone handed you a penny and you found this page on the other side, now you know why. Make your own QR to share contact information, open a link or text, or use an optional trackable redirect.</p>
+      <p class="aside-line">A cents-ible way to turn something physical into a digital connection.</p>
+      <a class="jump" href="#make">Make your own ↓</a>
+    </header>
 
-    <section class="grid">
-      <div class="panel">
-        <h2>Basic QR Code</h2>
+    <section class="concept" aria-label="How the idea works">
+      <div>“Penny for your thoughts?”</div><span>→</span><div>an actual penny</div><span>→</span><div>flip it</div><span>→</span><div>scan</div><span>→</span><div>share something</div>
+    </section>
 
-        <label for="basicText">URL or text</label>
-        <input id="basicText" type="text" placeholder="https://example.com" />
-
-        <label for="basicShape">Shape</label>
-        <select id="basicShape">
-          <option value="square" selected>Square</option>
-          <option value="circle">Circle</option>
-        </select>
-
-        <button id="generateBasicBtn">Generate Basic QR</button>
-
-        <div id="basicQrBox" class="qr-box"></div>
-
-        <div class="meta basic-meta"></div>
-
-        <button id="downloadBasicBtn" class="secondary">Download Basic QR</button>
+    <section id="make" class="section-card">
+      <div class="section-heading">
+        <div>
+          <h2>Choose what your QR does</h2>
+          <p>Each option is generated separately. Contact and Basic QRs are direct. Trackable QRs intentionally route through the tracking service.</p>
+        </div>
       </div>
 
-      <div class="panel">
-        <h2>Trackable QR Code</h2>
+      <div class="mode-grid" role="tablist" aria-label="QR type">
+        <button class="mode-card active" data-mode="contact" type="button" role="tab" aria-selected="true">
+          <strong>Contact QR</strong>
+          <span>Scan → phone recognizes contact information. No hosted contact file required.</span>
+          <small>Direct · no tracking</small>
+        </button>
+        <button class="mode-card" data-mode="basic" type="button" role="tab" aria-selected="false">
+          <strong>Basic QR</strong>
+          <span>Encode a URL or plain text directly into the QR.</span>
+          <small>Direct · no tracking</small>
+        </button>
+        <button class="mode-card" data-mode="trackable" type="button" role="tab" aria-selected="false">
+          <strong>Trackable QR</strong>
+          <span>Create a redirect QR so scans can be logged before opening the destination.</span>
+          <small>Online service required</small>
+        </button>
+      </div>
 
-        <label for="trackableLabel">Label</label>
-        <input id="trackableLabel" type="text" placeholder="Campaign or label" />
+      <div id="contactFields" class="mode-fields">
+        <h3>Contact information</h3>
+        <div class="form-grid two">
+          <div><label for="contactName">Full name <span>(required)</span></label><input id="contactName" autocomplete="name" placeholder="Jane Smith" /></div>
+          <div><label for="contactOrg">Organization <span>(optional)</span></label><input id="contactOrg" autocomplete="organization" placeholder="Example Organization" /></div>
+          <div><label for="contactTitle">Title <span>(optional)</span></label><input id="contactTitle" autocomplete="organization-title" placeholder="Project Manager" /></div>
+          <div><label for="contactPhone">Phone <span>(optional)</span></label><input id="contactPhone" autocomplete="tel" inputmode="tel" placeholder="+15125551234" /></div>
+          <div><label for="contactEmail">Email <span>(optional)</span></label><input id="contactEmail" autocomplete="email" inputmode="email" placeholder="name@example.com" /></div>
+          <div><label for="contactUrl">Website <span>(optional)</span></label><input id="contactUrl" inputmode="url" placeholder="https://example.com" /></div>
+        </div>
+        <div><label for="contactNote">Short description <span>(optional)</span></label><textarea id="contactNote" placeholder="Keep this short if the QR must be physically small."></textarea><div class="field-note">Longer descriptions increase QR density.</div></div>
+        <div class="privacy-note">Generated locally in your browser. The QR stores the contact data directly.</div>
+      </div>
 
-        <label for="trackableUrl">Destination URL</label>
-        <input id="trackableUrl" type="text" placeholder="https://example.com/landing-page" />
+      <div id="basicFields" class="mode-fields hidden">
+        <h3>URL or text</h3>
+        <label for="basicText">What should the QR contain?</label>
+        <textarea id="basicText" placeholder="https://example.com or plain text"></textarea>
+        <div class="privacy-note">Generated locally in your browser. No tracking service is contacted.</div>
+      </div>
 
-        <label for="notificationEmail">Notification email</label>
-        <input id="notificationEmail" type="email" placeholder="name@example.com" />
+      <div id="trackableFields" class="mode-fields hidden">
+        <h3>Trackable destination</h3>
+        <div class="form-grid two">
+          <div><label for="trackableLabel">Label <span>(optional)</span></label><input id="trackableLabel" placeholder="Campaign or token label" /></div>
+          <div><label for="trackableUrl">Destination URL <span>(required)</span></label><input id="trackableUrl" inputmode="url" placeholder="https://example.com/landing-page" /></div>
+          <div><label for="notificationEmail">Notification email <span>(optional)</span></label><input id="notificationEmail" type="email" placeholder="name@example.com" /></div>
+          <div><label for="trackingMode">Tracking mode</label><select id="trackingMode"><option value="direct">Log scan and redirect</option><option value="precise">Ask scanner for precise location, then redirect</option></select></div>
+        </div>
+        <div class="privacy-note warning">Trackable mode uses the configured Google Apps Script service. Scan events are sent to that service. Precise location is requested only when you select that option and the person scanning grants browser permission.</div>
+      </div>
 
-        <label for="trackingMode">Tracking mode</label>
-        <select id="trackingMode">
-          <option value="direct">Direct redirect only</option>
-          <option value="precise">Ask for precise location first</option>
-        </select>
+      <div class="settings-block">
+        <h3>QR settings</h3>
+        <div class="form-grid four">
+          <div><label for="qrShape">Shape</label><select id="qrShape"><option value="square" selected>Square</option><option value="circle">Circle</option></select></div>
+          <div><label for="ecLevel">Error correction</label><select id="ecLevel"><option value="M" selected>M (~15%) · Recommended</option><option value="Q">Q (~25%) · More durable</option><option value="H">H (~30%) · Highest redundancy</option></select></div>
+          <div><label for="imageSize">Image size <span>(pixels)</span></label><select id="imageSize"><option>256</option><option selected>320</option><option>384</option><option>448</option><option>512</option><option>768</option><option>1024</option></select></div>
+          <div><label for="physicalSize">Intended physical size</label><div class="split-input"><input id="physicalSize" type="number" min="0" step="0.01" placeholder="1.50" /><select id="physicalUnit" aria-label="Physical size unit"><option value="in" selected>in</option><option value="mm">mm</option></select></div></div>
+        </div>
+        <details class="compact-details"><summary>What do M, Q, and H mean?</summary><p><strong>M (~15%)</strong> is the recommended default and usually gives the best balance between QR density and damage tolerance. <strong>Q (~25%)</strong> adds redundancy for wear or defects, but can make the QR denser. <strong>H (~30%)</strong> has the most redundancy and is usually the densest. Higher error correction is not automatically easier to scan at the same physical size.</p></details>
+      </div>
 
-        <label for="trackableShape">Shape</label>
-        <select id="trackableShape">
-          <option value="square" selected>Square</option>
-          <option value="circle">Circle</option>
-        </select>
-
-        <button id="generateTrackableBtn">Generate Trackable QR</button>
-
-        <div id="trackableQrBox" class="qr-box"></div>
-
-        <div id="trackableMeta" class="meta"></div>
-
-        <button id="downloadTrackableBtn" class="secondary">Download Trackable QR</button>
+      <div class="action-row">
+        <button id="generateBtn" class="primary" type="button">Generate Contact QR</button>
+        <div id="formError" class="error-text" role="alert"></div>
       </div>
     </section>
+
+    <section class="section-card result-card">
+      <div class="section-heading"><div><h2>Generated QR</h2><p>Test the preview and the downloaded image before physical production.</p></div></div>
+      <div id="emptyResult" class="empty-state">Choose a QR type, enter its information, then generate.</div>
+      <div id="resultArea" class="hidden">
+        <div class="result-grid">
+          <div class="preview-panel">
+            <div id="qrPreview" class="qr-preview" aria-label="Generated QR preview"></div>
+            <button id="downloadBtn" class="secondary" type="button">Download PNG</button>
+          </div>
+          <div class="diagnostic-panel">
+            <h3>QR diagnostics</h3>
+            <dl class="diagnostics">
+              <div><dt>Encoded payload</dt><dd id="diagBytes">-</dd></div>
+              <div><dt>Error correction</dt><dd id="diagEc">-</dd></div>
+              <div><dt>QR version</dt><dd id="diagVersion">-</dd></div>
+              <div><dt>Matrix</dt><dd id="diagMatrix">-</dd></div>
+              <div><dt>Quiet zone</dt><dd>4 modules</dd></div>
+              <div><dt>Physical size</dt><dd id="diagPhysical">Not entered</dd></div>
+              <div><dt>Approx. module width</dt><dd id="diagModule">Not calculated</dd></div>
+            </dl>
+            <div id="scanStatus" class="status info">Enter an intended physical size to estimate physical module width.</div>
+            <div id="trackableMeta" class="trackable-meta hidden"></div>
+          </div>
+        </div>
+      </div>
+      <div id="qrError" class="status risk hidden" role="alert"></div>
+    </section>
+
+    <section class="section-card guidance">
+      <div class="section-heading"><div><h2>Making a reliable QR</h2><p>Use the diagnostics as design guidance, then verify the real artifact.</p></div></div>
+      <div class="guidance-grid">
+        <div><strong>Less data, simpler QR</strong><p>Long payloads can increase QR version and matrix size.</p></div>
+        <div><strong>Physical size matters</strong><p>A high-resolution PNG can still fail if reproduced too small.</p></div>
+        <div><strong>Keep the border clear</strong><p>Downloads preserve a four-module quiet zone. Keep text and graphics outside it.</p></div>
+        <div><strong>Test the finished material</strong><p>Engraving, printing, lighting, contrast, wear, and camera quality all matter.</p></div>
+      </div>
+    </section>
+
+    <section class="section-card faq">
+      <div class="section-heading"><div><h2>Common Cents (FAQ)</h2><p>A few cents-ible answers before you make a batch.</p></div></div>
+      <details><summary>Does a Contact QR need the internet?</summary><p>No. The contact data is encoded directly in the QR. A compatible scanner can interpret it without fetching a hosted contact file.</p></details>
+      <details><summary>Are Contact and Basic QRs tracked?</summary><p>No. They are generated directly in the browser and do not route a scan through the tracking service.</p></details>
+      <details><summary>What makes the Trackable option different?</summary><p>The QR contains a redirect URL. When scanned, that redirect can log the scan before sending the visitor to the destination. It therefore requires an online service.</p></details>
+      <details><summary>What do M, Q, and H change?</summary><p>They change error-correction redundancy. More redundancy can improve tolerance to damage but can also increase QR density. M is the default balance.</p></details>
+      <details><summary>Why did my QR become more complicated?</summary><p>More encoded information can require a larger QR matrix. Shortening optional content can sometimes reduce the QR version.</p></details>
+      <details><summary>How small can I make it?</summary><p>There is no single safe physical minimum. Module size, contrast, reproduction method, material, lighting, and scanner quality all affect reliability. Use the estimate here as a starting point and test the final artifact.</p></details>
+      <details><summary>Square or circle?</summary><p>Square is the conventional QR geometry. Circular styling is decorative and should be tested particularly carefully before producing multiples.</p></details>
+      <p class="aside-line small">The cents-ible rule: generate it, reproduce it at final size, then scan-test it before making a batch.</p>
+    </section>
+
+    <section class="section-card future">
+      <details>
+        <summary>Change things up · future ideas</summary>
+        <p>The penny is only one physical manifestation. Future experiments could explore other coins, materials, phrases, and interactions without crowding the core QR tool.</p>
+        <div class="future-tags"><span>“My two cents”</span><span>“You’re a dime”</span><span>nickel-related phrases</span><span>quarter / change ideas</span><span>wood</span><span>acrylic</span><span>metal</span><span>reclaimed materials</span></div>
+      </details>
+    </section>
+
+    <footer>
+      <span>Free QR tools · no account or payment required for direct Contact and Basic generation.</span>
+      <a href="https://github.com/robert-z-lehr/QR-Code-Generators-Basic-and-Trackable" target="_blank" rel="noopener">View the open-source repository</a>
+    </footer>
   </main>
 
   <script src="script.js"></script>
-  <script src="shape-options.js"></script>
 </body>
 </html>
