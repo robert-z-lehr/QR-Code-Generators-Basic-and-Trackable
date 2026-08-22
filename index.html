@@ -128,7 +128,14 @@
     </section>
 
     <section class="section-card feedback" id="feedback">
-      <details id="feedbackDetails"><summary>Send feedback</summary><p>This tool is a work in progress. A direct feedback-email backend is planned. Until that is connected, you can use the repository link below to share an issue or suggestion.</p><a class="secondary-link" href="https://github.com/robert-z-lehr/QR-Code-Generators-Basic-and-Trackable/issues/new" target="_blank" rel="noopener">Open feedback issue</a></details>
+      <details id="feedbackDetails"><summary>Send feedback</summary><p>This tool is a work in progress. Please enter your feedback below, and it will be sent to the configured email address.</p>
+      <form id="feedbackForm">
+        <label for="feedbackText">Your feedback</label>
+        <textarea id="feedbackText" rows="4" placeholder="Enter your feedback here..."></textarea>
+        <button type="submit" class="secondary">Submit Feedback</button>
+        <div id="feedbackResult" class="feedback-result" role="status"></div>
+      </form>
+      </details>
     </section>
 
     <section class="section-card future">
